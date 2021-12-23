@@ -7,7 +7,7 @@ POST_PATH = "posts.json"
 UPLOAD_FOLDER = "uploads/images"
 
 app = Flask(__name__)
-
+#git
 
 @app.route("/")
 def page_index():
