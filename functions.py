@@ -25,3 +25,10 @@ def get_posts_by_tag(data, tag):
         if f'#{tag}' in record['content']:
             results.append(record)
     return results
+
+
+def save_post(filename, post):
+    data = read_post(filename)
+    data.append(post)
+    with open(filename, 'w', encoding='utf=8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
