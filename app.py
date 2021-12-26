@@ -1,13 +1,11 @@
-import json
-
-from flask import Flask, request, render_template, send_from_directory
-from functions import read_post, get_tags
+from flask import Flask, request, render_template, send_from_directory, abort
+from functions import read_post, get_tags, get_posts_by_tag
 
 POST_PATH = "posts.json"
 UPLOAD_FOLDER = "uploads/images"
 
 app = Flask(__name__)
-#git
+
 
 @app.route("/")
 def page_index():
@@ -16,7 +14,12 @@ def page_index():
 
 @app.route("/tag/")
 def page_tag():
-    pass
+    tag = request.args.get('tag')
+    if not tag:
+        abort(400)
+    data = read_post(POST_PATH)
+    posts = get_posts_by_tag(data, tag)
+    return render_template('post_by_tag.html', tag=tag, posts=posts)
 
 
 @app.route("/post", methods=["GET", "POST"])
